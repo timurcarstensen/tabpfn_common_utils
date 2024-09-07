@@ -1,4 +1,4 @@
-from typing_extensions import Union
+from typing_extensions import Union, List, Dict
 
 import numpy as np
 import torch
@@ -30,7 +30,7 @@ class RegressionPredictResult:
         return self._val_type
 
     @staticmethod
-    def to_basic_representation(res: "RegressionPredictResult") -> dict[str, list]:
+    def to_basic_representation(res: "RegressionPredictResult") -> Dict[str, List]:
         if res.val_type == list:
             return res
 
@@ -48,9 +48,9 @@ class RegressionPredictResult:
 
     @staticmethod
     def from_basic_representation(
-        basic_repr: dict[str, list],
+        basic_repr: Dict[str, List],
         output_val_type: Union[np.ndarray, torch.Tensor]
-    ) -> dict[str, Union[np.ndarray, torch.Tensor]]:
+    ) -> Dict[str, Union[np.ndarray, torch.Tensor]]:
 
         if output_val_type == torch.Tensor:
             deserialize_fn = torch.tensor
