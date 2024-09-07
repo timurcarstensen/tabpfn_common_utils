@@ -1,4 +1,4 @@
-from typing import Union
+from typing_extensions import Union
 
 import numpy as np
 import torch

@@ -1,5 +1,4 @@
-import typing
-from functools import wraps
+from typing_extensions import Tuple, Union, List, Dict, Literal
 
 import pandas as pd
 import numpy as np
@@ -9,7 +8,7 @@ from sklearn.model_selection import train_test_split
 
 
 def serialize_to_csv_formatted_bytes(
-    data: typing.Union[pd.DataFrame, pd.Series, np.ndarray, torch.Tensor],
+    data: Union[pd.DataFrame, pd.Series, np.ndarray, torch.Tensor],
 ) -> bytes:
     if type(data) not in [pd.DataFrame, pd.Series, np.ndarray, torch.Tensor]:
         raise TypeError(f"({type(data)}) is not supported for serialization")
@@ -28,10 +27,10 @@ def serialize_to_csv_formatted_bytes(
 
 FileName = str
 FileContent = bytes
-FileUpload = typing.Tuple[FileName, FileContent]
+FileUpload = Tuple[FileName, FileContent]
 
 
-def to_httpx_post_file_format(file_uploads: typing.List[FileUpload]) -> typing.Dict:
+def to_httpx_post_file_format(file_uploads: List[FileUpload]) -> Dict:
     ret = {}
     for file_category, filename, content in file_uploads:
         ret[file_category] = (filename, content)
@@ -59,8 +58,8 @@ def singleton(cls):
 
 
 def get_example_dataset(
-    dataset_name: typing.Literal["iris", "breast_cancer", "digits", "diabetes"],
-) -> typing.Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    dataset_name: Literal["iris", "breast_cancer", "digits", "diabetes"],
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     load_dataset_fn = {
         "iris": load_iris,
         "breast_cancer": load_breast_cancer,
@@ -79,7 +78,7 @@ def get_example_dataset(
 
 def get_dataset_with_specific_size(
     num_examples: int = 10_000, num_columns: int = 100
-) -> typing.Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     x_train = np.random.RandomState(42).rand(num_examples, num_columns)
     y_train = np.random.RandomState(42).randint(0, 2, size=num_examples)
 
